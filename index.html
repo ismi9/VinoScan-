@@ -18,6 +18,7 @@
       <button class="tab active" data-tab="diagnose">🔍 Діагностика</button>
       <button class="tab" data-tab="reference">📖 Довідник</button>
       <button class="tab" data-tab="journal">📒 Журнал</button>
+      <button class="tab" data-tab="settings">⚙️</button>
     </nav>
   </header>
 
@@ -67,6 +68,24 @@
       <button id="btn-clear" class="btn btn-outline">🗑 Очистити</button>
     </div>
     <div id="journal-list" class="journal-list"></div>
+  </section>
+
+  <!-- TAB: Налаштування -->
+  <section id="tab-settings" class="tab-content">
+    <div class="settings-card">
+      <h3>🤖 OpenAI API-ключ</h3>
+      <p style="font-size:.85rem;color:var(--muted);margin:8px 0">Ключ зберігається локально в браузері та не передається на сервер.</p>
+      <input type="password" id="settings-key" class="settings-input" placeholder="sk-... вставити ключ">
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button id="btn-save-key" class="btn btn-primary">💾 Зберегти</button>
+        <button id="btn-clear-key" class="btn btn-outline">🗑 Видалити</button>
+      </div>
+      <p id="settings-status" style="font-size:.85rem;margin-top:8px;color:var(--green)"></p>
+    </div>
+    <div class="settings-card" style="margin-top:12px">
+      <h3>ℹ️ Про VinoScan</h3>
+      <p style="font-size:.85rem;color:var(--muted);margin:8px 0">PWA-застосунок для діагностики виноградного листя через GPT-4o Vision. Версія 2.0</p>
+    </div>
   </section>
 
   <!-- Modal -->
