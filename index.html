@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#2d5016">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <title>VinoScan</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Splash / tab bar -->
+  <header class="app-bar">
+    <h1>🍇 VinoScan</h1>
+    <nav class="tabs">
+      <button class="tab active" data-tab="diagnose">🔍 Діагностика</button>
+      <button class="tab" data-tab="reference">📖 Довідник</button>
+      <button class="tab" data-tab="journal">📒 Журнал</button>
+    </nav>
+  </header>
+
+  <!-- TAB: Діагностика -->
+  <section id="tab-diagnose" class="tab-content active">
+    <div class="camera-area">
+      <video id="video" autoplay playsinline></video>
+      <canvas id="canvas" style="display:none"></canvas>
+      <div class="camera-actions">
+        <button id="btn-camera" class="btn btn-primary">📷 Зробити фото</button>
+        <button id="btn-gallery" class="btn btn-secondary">🖼 Обрати з галереї</button>
+        <input type="file" id="file-input" accept="image/*" style="display:none">
+      </div>
+    </div>
+    <div id="result-card" class="result-card hidden">
+      <h2 id="result-title">Результат</h2>
+      <p id="result-desc"></p>
+      <div id="treatment-box" class="treatment-box hidden">
+        <h3>💊 Рекомендації з обробки</h3>
+        <p id="treatment-text"></p>
+      </div>
+      <div class="result-actions">
+        <button id="btn-save" class="btn btn-secondary">💾 Зберегти в журнал</button>
+        <button id="btn-new" class="btn btn-outline">🔄 Нове фото</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB: Довідник -->
+  <section id="tab-reference" class="tab-content">
+    <div class="search-bar">
+      <input type="text" id="ref-search" placeholder="Пошук хвороби або дефіциту…">
+    </div>
+    <div id="ref-list" class="ref-list"></div>
+    <div id="ref-detail" class="ref-detail hidden">
+      <button id="ref-back" class="btn btn-outline">← Назад</button>
+      <h2 id="ref-detail-title"></h2>
+      <p id="ref-detail-symptoms"></p>
+      <div id="ref-detail-treatment" class="treatment-box"></div>
+    </div>
+  </section>
+
+  <!-- TAB: Журнал -->
+  <section id="tab-journal" class="tab-content">
+    <div class="journal-toolbar">
+      <button id="btn-export" class="btn btn-secondary">📤 Експорт</button>
+      <button id="btn-clear" class="btn btn-outline">🗑 Очистити</button>
+    </div>
+    <div id="journal-list" class="journal-list"></div>
+  </section>
+
+  <!-- Modal -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <span id="modal-close" class="modal-close">&times;</span>
+      <h3 id="modal-title"></h3>
+      <p id="modal-text"></p>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
