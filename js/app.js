@@ -35,7 +35,12 @@ async function startCamera() {
     const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment', width: { ideal: 1080 }, height: { ideal: 1080 } } });
     video.srcObject = stream;
   } catch(e) {
-    showModal('Помилка', 'Не вдалося відкрити камеру. Дозвольте доступ або оберіть фото з галереї.');
+    // Inline notification — не блокує UI
+    const area = document.querySelector('.camera-area');
+    const notice = document.createElement('p');
+    notice.style.cssText = 'color:var(--muted);font-size:.85rem;margin-top:8px';
+    notice.textContent = 'ℹ️ Камера недоступна, використовуйте галерею.';
+    area.appendChild(notice);
   }
 }
 startCamera();
@@ -237,23 +242,30 @@ function showModal(title, text) {
 // --- Settings ---
 const settingsKey = document.getElementById('settings-key');
 const settingsStatus = document.getElementById('settings-status');
-if (localStorage.getItem('vinoscan_api_key')) {
-  settingsKey.value = '••••••••' + localStorage.getItem('vinoscan_api_key').slice(-6);
-  settingsStatus.textContent = '✅ Ключ збережено';
+function updateSettingsUI() {
+  const key = localStorage.getItem('vinoscan_api_key');
+  if (key) {
+    settingsKey.placeholder = 'Введіть новий ключ для заміни';
+    settingsStatus.textContent = '✅ Ключ збережено';
+  } else {
+    settingsKey.placeholder = 'sk-... вставити ключ';
+    settingsStatus.textContent = '';
+  }
 }
+updateSettingsUI();
 document.getElementById('btn-save-key').addEventListener('click', () => {
   const val = settingsKey.value.trim();
-  if (!val || val.startsWith('••••')) { showModal('Увага', 'Вставте новий ключ'); return; }
+  if (!val) { showModal('Увага', 'Вставте API-ключ у поле'); return; }
   localStorage.setItem('vinoscan_api_key', val);
-  settingsKey.value = '••••••••' + val.slice(-6);
-  settingsStatus.textContent = '✅ Ключ збережено';
+  settingsKey.value = '';
+  updateSettingsUI();
   showModal('Готово', 'API-ключ збережено.');
 });
 document.getElementById('btn-clear-key').addEventListener('click', () => {
   if (confirm('Видалити API-ключ?')) {
     localStorage.removeItem('vinoscan_api_key');
     settingsKey.value = '';
-    settingsStatus.textContent = '🗑 Ключ видалено';
+    updateSettingsUI();
   }
 });
 
